@@ -1,0 +1,10 @@
+### Creating New Users
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstName": "Burhanudin",
+  "lastName": "Rabbani",
+  "email": "bani@bani.io",
+  "password": "Bani1234"
+}
