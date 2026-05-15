@@ -3,29 +3,29 @@ import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class PostsService {
-  constructor(
-    /**
-     * Injecting UserService
-     */
-    private readonly usersService: UsersService,
-  ) {}
+    constructor(
+        /**
+         * Injecting UserService
+         */
+        private readonly usersService: UsersService,
+    ) {}
 
-  public findAll(userId: number) {
-    const user = this.usersService.findOneById(userId);
+    public findAll(userId: number) {
+        const user = this.usersService.findOneById(userId);
 
-    return [
-      {
-        user,
-        title: 'Test Title1',
-        content: 'content1',
-      },
-      {
-        user,
-        title: 'Test Title2',
-        content: 'content2',
-      },
-    ];
-  }
+        return [
+            {
+                user,
+                title: 'Test Title1',
+                content: 'content1',
+            },
+            {
+                user,
+                title: 'Test Title2',
+                content: 'content2',
+            },
+        ];
+    }
 
-  public createNewPost() {}
+    public createNewPost() {}
 }

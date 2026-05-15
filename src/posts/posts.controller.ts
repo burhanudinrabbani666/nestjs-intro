@@ -1,4 +1,11 @@
-import { Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    ParseIntPipe,
+    Post,
+} from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateNewPostDto } from './dto/create-post.dto';
@@ -6,23 +13,23 @@ import { CreateNewPostDto } from './dto/create-post.dto';
 @Controller('posts')
 @ApiTags('Posts')
 export class PostsController {
-  constructor(
+    constructor(
+        /**
+         * Injecting Post Service
+         */
+        private readonly postService: PostsService,
+    ) {}
+
     /**
-     * Injecting Post Service
+     * GET localhost:3000/posts/:userId
      */
-    private readonly postService: PostsService,
-  ) {}
+    @Get('{/:userId}')
+    public getPosts(@Param('userId', ParseIntPipe) userId: number) {
+        return this.postService.findAll(userId);
+    }
 
-  /**
-   * GET localhost:3000/posts/:userId
-   */
-  @Get('{/:userId}')
-  public getPosts(@Param('userId', ParseIntPipe) userId: number) {
-    return this.postService.findAll(userId);
-  }
-
-  @Post()
-  public createNewPost(@Body() createNewPostDto: CreateNewPostDto) {
-    return this.postService.createNewPost();
-  }
+    @Post()
+    public createNewPost(@Body() createNewPostDto: CreateNewPostDto) {
+        console.log(createNewPostDto);
+    }
 }
