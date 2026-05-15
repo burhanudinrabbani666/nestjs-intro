@@ -1,17 +1,31 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Headers,
+  Ip,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
-  @Get('{/:id{/:optional}}')
-  public getUsers(@Param('id') id: string, @Query() query: any) {
-    console.log(params);
-    console.log(query);
+  @Get('{/:id}')
+  public getUsers(@Param('id', ParseIntPipe) id: number | undefined) {
+    console.log(id);
     return `You Send GET Request to /users endpoint with`;
   }
 
   @Post()
-  public createUsers(@Body() body: any) {
+  public createUsers(
+    @Body() body: any,
+    @Headers() headers: any,
+    @Ip() ip: any,
+  ) {
     console.log(body);
+    console.log(headers);
+    console.log(ip);
     return 'You Sent a POST to users endpoint';
   }
 }
