@@ -10,7 +10,7 @@ export class PostsService {
     private readonly usersService: UsersService,
   ) {}
 
-  public findAll(userId: string) {
+  public findAll(userId: number) {
     const user = this.usersService.findOneById(userId);
 
     return [
@@ -26,4 +26,6 @@ export class PostsService {
       },
     ];
   }
+
+  public createNewPost() {}
 }

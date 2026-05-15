@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { GetUsersParamsDto } from './dto/get-users-params.dto';
+import { GetUserParamDto } from './dto/get-users-params.dto';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class UsersService {
   ) {}
 
   public findAll(
-    getUserParamsDto: GetUsersParamsDto,
+    // getUserParamsDto: GetUsersParamsDto,
     limit: number,
     page: number,
   ) {
@@ -36,7 +36,7 @@ export class UsersService {
     ];
   }
 
-  public findOneById(id: string) {
+  public findOneById(id: number) {
     return {
       id,
       firstName: 'Burhanudin',

@@ -2,3 +2,7 @@
 GET http://localhost:3000/users/
 # ?limit=10
 # &offset=20
+
+
+### Get One Users By Id
+GET http://localhost:3000/users/123
