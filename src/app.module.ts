@@ -5,6 +5,8 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './users/users.entity';
+import { Posts } from './posts/posts.entity';
 
 @Module({
     imports: [
@@ -22,7 +24,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                 database: 'nestjs_blog',
                 username: 'rabbani',
                 password: 'rabbani',
-                entities: [],
+                entities: [User, Posts],
             }),
         }),
     ],

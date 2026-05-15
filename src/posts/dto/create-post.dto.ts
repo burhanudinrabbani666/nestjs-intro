@@ -22,6 +22,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class CreateNewPostDto {
     @IsString()
     @MinLength(3)
+    @MaxLength(255)
     @IsNotEmpty()
     @ApiProperty({
         description: 'This is for the blog post',
@@ -39,6 +40,7 @@ export class CreateNewPostDto {
 
     @IsString()
     @MinLength(3)
+    @MaxLength(255)
     @IsNotEmpty()
     @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
         message:
@@ -82,7 +84,7 @@ export class CreateNewPostDto {
 
     @IsUrl()
     @MinLength(3)
-    @MaxLength(200)
+    @MaxLength(1000)
     @IsOptional()
     @ApiPropertyOptional({
         description: 'Featured image for your blog post',
