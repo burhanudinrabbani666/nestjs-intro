@@ -1,4 +1,4 @@
-export enum PostEnum {
+export enum PostTypeEnum {
   POST = 'POST',
   PAGE = 'PAGE',
   STORY = 'STORY',

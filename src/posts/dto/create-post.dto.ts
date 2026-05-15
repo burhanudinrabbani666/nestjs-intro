@@ -1,47 +1,65 @@
 import {
-  IsDate,
+  IsArray,
+  IsEnum,
+  IsISO8601,
+  IsJSON,
   IsNotEmpty,
+  IsOptional,
   IsString,
+  IsUrl,
+  Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { PostEnum } from './enums/postType.enum';
+import { PostTypeEnum } from './enums/postType.enum';
 import { StatusEnum } from './enums/status.enum';
 
 export class CreateNewPostDto {
   @IsString()
   @MinLength(3)
-  @MaxLength(100)
   @IsNotEmpty()
   title!: string;
 
-  postType!: PostEnum;
+  @IsEnum(PostTypeEnum)
+  @IsNotEmpty()
+  postType!: PostTypeEnum;
 
   @IsString()
   @MinLength(3)
-  @MaxLength(100)
+  @IsNotEmpty()
+  @Matches(/^[a-z0]+(?:[a-z0-9+]*$)/, {
+    message:
+      'A slug be all small letters and only "-" and without spaces. For example: "my-url"',
+  })
   slug!: string;
 
+  @IsNotEmpty()
+  @IsEnum(StatusEnum)
   status!: StatusEnum;
 
   @IsString()
   @MinLength(3)
-  @MaxLength(100)
+  @IsOptional()
   content?: string;
 
-  @IsString()
-  @MinLength(3)
-  @MaxLength(100)
+  @IsOptional()
+  @IsJSON()
   schema?: string;
 
-  @IsString()
+  @IsUrl()
   @MinLength(3)
   @MaxLength(200)
+  @IsOptional()
   featuredImageUrl?: string;
 
-  @IsDate()
+  @IsISO8601()
+  @IsOptional()
   publishOn?: Date;
 
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @MinLength(3, { each: true })
   tags?: string[];
 
   metaOptions!: [{ key: 'sidebarEnabled'; value: true }];
