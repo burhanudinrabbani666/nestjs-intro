@@ -17,7 +17,9 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
   constructor(
-    // This is injection Depedency
+    /**
+     * This is injection Depedency userService
+     */
     private readonly usersService: UsersService,
   ) {}
 
