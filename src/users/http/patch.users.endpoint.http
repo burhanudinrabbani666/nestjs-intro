@@ -1,0 +1,7 @@
+### Patch Users Data
+PATCH  http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstName": "Burhanudin"
+}
