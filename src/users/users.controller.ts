@@ -9,7 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { createUserDto } from './dto/create-users.dto';
+import { CreateUserDto } from './dto/create-users.dto';
 
 @Controller('users')
 export class UsersController {
@@ -26,7 +26,8 @@ export class UsersController {
   }
 
   @Post()
-  public createUsers(@Body() createUserDto: createUserDto) {
+  public createUsers(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto instanceof CreateUserDto);
     return createUserDto;
   }
 }
