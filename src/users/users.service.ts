@@ -1,14 +1,39 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import {
+    ConflictException,
+    forwardRef,
+    Inject,
+    Injectable,
+} from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
+import { Repository } from 'typeorm';
+import { User } from './users.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto } from './dto/create-users.dto';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
 export class UsersService {
-    /** Exports AuthServices */
+    /**
+     * Exports AuthServices
+     * Injecting Repository
+     * */
     constructor(
         @Inject(forwardRef(() => AuthService))
         private readonly authService: AuthService,
+        @InjectRepository(User)
+        private usersRepository: Repository<User>,
     ) {}
+
+    public async createUser(createUserDto: CreateUserDto): Promise<User> {
+        const existingUser = await this.usersRepository.findOne({
+            where: { email: createUserDto.email },
+        });
+        if (existingUser) throw new ConflictException('Email Already Exist');
+
+        // Create A new User
+        const newUser = this.usersRepository.create(createUserDto);
+        return this.usersRepository.save(newUser);
+    }
 
     /** The Method to get all users from database */
     public findAll(limit: number, page: number) {
