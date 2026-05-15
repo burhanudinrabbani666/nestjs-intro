@@ -29,10 +29,6 @@ export class UsersController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    if (getUsersParamsDto.id) {
-      return this.usersService.findOneById(getUsersParamsDto.id);
-    }
-
     return this.usersService.findAll(getUsersParamsDto, limit, page);
   }
 
