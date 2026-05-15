@@ -5,5 +5,5 @@ Content-Type: application/json
 {
   "firstName": "Burhanudin",
   "email": "bani@bani.io",
-  "password": "banibani1234*"
+  "password": "banibani1234*",
 }

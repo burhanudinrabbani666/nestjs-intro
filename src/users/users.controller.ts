@@ -1,28 +1,12 @@
-import {
-  Body,
-  Controller,
-  DefaultValuePipe,
-  Get,
-  Headers,
-  Param,
-  ParseIntPipe,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
+import { GetUsersParamsDto } from './dto/get-users-params.dto';
 
 @Controller('users')
 export class UsersController {
   @Get('{/:id}')
-  public getUsers(
-    @Param('id', ParseIntPipe) id: number | undefined,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-  ) {
-    console.log(id);
-    console.log(limit);
-    console.log(page);
-    return `You Send GET Request to /users endpoint with`;
+  public getUsers(@Param() getUsersParamsDto: GetUsersParamsDto) {
+    return getUsersParamsDto;
   }
 
   @Post()
@@ -30,4 +14,7 @@ export class UsersController {
     console.log(createUserDto instanceof CreateUserDto);
     return createUserDto;
   }
+
+  @Patch()
+  public patchUser(@Body() body: any) {}
 }
