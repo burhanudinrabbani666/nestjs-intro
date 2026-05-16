@@ -1,8 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { PostTypeEnum } from './dto/enums/postType.enum';
 import { StatusEnum } from './dto/enums/status.enum';
-import { CreatePostMetaOptions } from './dto/create-post-metaoptions.dto';
-import { Post } from '@nestjs/common';
+import { CreatePostMetaOptions } from '../meta-options/dto/create-post-metaoptions.dto';
 
 @Entity()
 export class Posts {
@@ -65,16 +64,6 @@ export class Posts {
     })
     publishOn?: Date;
 
-    // TODO:
-    @Column({
-        type: 'simple-array',
-        nullable: true,
-    })
     tags?: string[];
-
-    @Column({
-        type: 'array',
-        nullable: true,
-    })
     metaOptions?: CreatePostMetaOptions[];
 }

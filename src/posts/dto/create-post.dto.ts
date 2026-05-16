@@ -15,9 +15,10 @@ import {
 
 import { PostTypeEnum } from './enums/postType.enum';
 import { StatusEnum } from './enums/status.enum';
-import { CreatePostMetaOptions } from './create-post-metaoptions.dto';
+import { CreatePostMetaOptions } from '../../meta-options/dto/create-post-metaoptions.dto';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { SLUG_NAME_DESCRIPTION, SLUG_REQUIREMENT } from '../../utils/slug';
 
 export class CreateNewPostDto {
     @IsString()
@@ -42,13 +43,11 @@ export class CreateNewPostDto {
     @MinLength(3)
     @MaxLength(255)
     @IsNotEmpty()
-    @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
-        message:
-            'A slug be all small letters and only "-" and without spaces. For example: "my-url"',
+    @Matches(SLUG_REQUIREMENT, {
+        message: SLUG_NAME_DESCRIPTION,
     })
     @ApiProperty({
-        description:
-            "A slug be all small letters and only '-' and without spaces. For example: 'my-url'",
+        description: SLUG_NAME_DESCRIPTION,
         example: 'nest-js',
     })
     slug!: string;
