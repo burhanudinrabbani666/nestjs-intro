@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "title": "Angular is opinioneted framework",
     "postType": "POST",
-    "slug": "angular-js",
+    "slug": "angular-js-framework",
     "status": "DRAFT",
     "content": "tets Content",
     "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
@@ -13,5 +13,6 @@ Content-Type: application/json
     "tags": ["NestJS", "TypeScript"],
     "metaOptions": {
         "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"
-    }
+    },
+    "authorId": 1
 }

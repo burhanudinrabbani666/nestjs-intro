@@ -11,7 +11,6 @@ import {
 import { PostsService } from './posts.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateNewPostDto } from './dto/create-post.dto';
-import { DeleteResult } from 'typeorm';
 
 @Controller('posts')
 @ApiTags('Posts')

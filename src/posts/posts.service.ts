@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateNewPostDto } from './dto/create-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { MetaOptions } from '../meta-options/meta-options.entity';
 import { Repository } from 'typeorm';
 import { Posts } from './posts.entity';
 import { Post } from './interface/post.interface';
+import { User } from '../users/users.entity';
 
 @Injectable()
 export class PostsService {
@@ -19,13 +20,13 @@ export class PostsService {
         private readonly metaOptionsRepository: Repository<MetaOptions>,
         @InjectRepository(Posts)
         private readonly postRepository: Repository<Posts>,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
     ) {}
 
     public async findAll(): Promise<Post[]> {
         const post = await this.postRepository.find({
-            relations: {
-                metaOptions: true,
-            },
+            relations: { metaOptions: true },
         });
 
         return post;
@@ -35,7 +36,17 @@ export class PostsService {
     public async createNewPost(
         createNewPostDto: CreateNewPostDto,
     ): Promise<Post> {
-        const post = this.postRepository.create(createNewPostDto); // metaOptions is cascade
+        // Find author
+        const author = await this.usersService.findOneById(
+            createNewPostDto.authorId,
+        );
+
+        if (!author) throw new NotFoundException();
+
+        const post = this.postRepository.create({
+            ...createNewPostDto,
+            author,
+        });
         return this.postRepository.save(post);
     }
 

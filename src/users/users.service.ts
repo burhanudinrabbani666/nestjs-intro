@@ -59,11 +59,7 @@ export class UsersService {
     }
 
     /** The Method to get one user by id from user from database */
-    public findOneById(id: number) {
-        return {
-            id,
-            firstName: 'Burhanudin',
-            email: 'bani@bani.io',
-        };
+    public async findOneById(id: number): Promise<User | null> {
+        return this.usersRepository.findOne({ where: { id } });
     }
 }
