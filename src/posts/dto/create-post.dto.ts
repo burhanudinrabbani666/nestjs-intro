@@ -15,7 +15,7 @@ import {
 
 import { PostTypeEnum } from './enums/postType.enum';
 import { StatusEnum } from './enums/status.enum';
-import { CreatePostMetaOptions } from '../../meta-options/dto/create-post-metaoptions.dto';
+import { CreatePostMetaOptionsDto } from '../../meta-options/dto/create-post-metaoptions.dto';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { SLUG_NAME_DESCRIPTION, SLUG_REQUIREMENT } from '../../utils/slug';
@@ -115,7 +115,7 @@ export class CreateNewPostDto {
     @IsOptional()
     @IsArray()
     @ValidateNested({ each: true })
-    @Type(() => CreatePostMetaOptions)
+    @Type(() => CreatePostMetaOptionsDto)
     @ApiPropertyOptional({
         type: 'array',
         required: false,
@@ -136,5 +136,5 @@ export class CreateNewPostDto {
             },
         },
     })
-    metaOptions?: CreatePostMetaOptions[];
+    metaOptions?: CreatePostMetaOptionsDto[];
 }

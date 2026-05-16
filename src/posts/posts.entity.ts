@@ -7,7 +7,6 @@ import {
 } from 'typeorm';
 import { PostTypeEnum } from './dto/enums/postType.enum';
 import { StatusEnum } from './dto/enums/status.enum';
-import { CreatePostMetaOptions } from '../meta-options/dto/create-post-metaoptions.dto';
 import { MetaOptions } from '../meta-options/meta-options.entity';
 
 @Entity()

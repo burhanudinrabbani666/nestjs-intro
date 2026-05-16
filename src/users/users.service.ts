@@ -39,6 +39,8 @@ export class UsersService {
     public findAll(limit: number, page: number) {
         const isAuth = this.authService.isAuth();
         console.log(isAuth);
+        console.log(limit);
+        console.log(page);
 
         return [
             {
