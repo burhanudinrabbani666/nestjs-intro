@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 import { SLUG_NAME_DESCRIPTION, SLUG_REQUIREMENT } from '../../utils/slug';
 
-export class TagsDto {
+export class CreateTagsDto {
     @ApiProperty()
     @IsString()
     @MinLength(3)
