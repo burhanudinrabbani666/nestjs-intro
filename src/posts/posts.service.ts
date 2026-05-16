@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateNewPostDto } from './dto/create-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetaOptions } from '../meta-options/meta-options.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { Posts } from './posts.entity';
 import { Post } from './interface/post.interface';
 
@@ -37,5 +37,18 @@ export class PostsService {
     ): Promise<Post> {
         const post = this.postRepository.create(createNewPostDto); // metaOptions is cascade
         return this.postRepository.save(post);
+    }
+
+    public async deletePosts(postId: number): Promise<DeleteResult> {
+        const post = await this.postRepository.findOne({
+            where: { id: postId },
+        });
+
+        if (!post) throw new NotFoundException();
+
+        if (post.metaOptions?.id)
+            await this.metaOptionsRepository.delete(post.metaOptions.id);
+
+        return this.postRepository.delete(postId);
     }
 }

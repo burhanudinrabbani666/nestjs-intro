@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Post,
+    Query,
+} from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateNewPostDto } from './dto/create-post.dto';
+import { DeleteResult } from 'typeorm';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -24,5 +34,10 @@ export class PostsController {
     @Post()
     public createNewPost(@Body() createNewPostDto: CreateNewPostDto) {
         return this.postService.createNewPost(createNewPostDto);
+    }
+
+    @Delete()
+    public deletePosts(@Query('id', ParseIntPipe) id: number) {
+        return this.postService.deletePosts(id);
     }
 }
