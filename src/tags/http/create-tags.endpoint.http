@@ -3,6 +3,7 @@ POST http://localhost:3000/tags
 Content-Type: application/json
 
 {
-    "name": "TypeScript",
-    "slug": "typescript-06"
+    "name": "Modern JavaScript",
+    "slug": "modern-javascript",
+    "description": "This tag is used for posts related to JavaScript topics."
 }

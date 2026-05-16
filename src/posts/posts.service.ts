@@ -7,13 +7,17 @@ import { Repository } from 'typeorm';
 import { Posts } from './posts.entity';
 import { Post } from './interface/post.interface';
 import { User } from '../users/users.entity';
+import { TagsService } from '../tags/tags.service';
+import { Tags } from '../tags/tags.entity';
 
 @Injectable()
 export class PostsService {
     constructor(
         /**
          * Injecting UserService
+         * Injecting tagsService
          * Injecting metaOptions
+         * Injecting userRepository
          */
         private readonly usersService: UsersService,
         @InjectRepository(MetaOptions)
@@ -22,6 +26,7 @@ export class PostsService {
         private readonly postRepository: Repository<Posts>,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
+        private readonly tagsService: TagsService,
     ) {}
 
     public async findAll(): Promise<Post[]> {
@@ -43,11 +48,18 @@ export class PostsService {
         const author = await this.usersService.findOneById(
             createNewPostDto.authorId,
         );
-
         if (!author) throw new NotFoundException();
+
+        let tags: Tags[] = [];
+        if (createNewPostDto.tags) {
+            tags = await this.tagsService.findMultipleTags(
+                createNewPostDto.tags,
+            );
+        }
 
         const post = this.postRepository.create({
             ...createNewPostDto,
+            tags,
             author,
         });
         return this.postRepository.save(post);

@@ -2,9 +2,9 @@ POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "title": "Angular is opinioneted framework",
+    "title": "Angular Is created By Google",
     "postType": "POST",
-    "slug": "angular-js-framework",
+    "slug": "angular-js-google-framework",
     "status": "DRAFT",
     "content": "tets Content",
     "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
@@ -14,5 +14,6 @@ Content-Type: application/json
     "metaOptions": {
         "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"
     },
-    "authorId": 1
+    "authorId": 1,
+    "tags": [2]
 }

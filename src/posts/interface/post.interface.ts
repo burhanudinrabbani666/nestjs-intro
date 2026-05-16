@@ -1,4 +1,5 @@
 import { MetaOptions } from '../../meta-options/meta-options.entity';
+import { Tags } from '../../tags/tags.entity';
 import { PostTypeEnum } from '../dto/enums/postType.enum';
 import { StatusEnum } from '../dto/enums/status.enum';
 
@@ -13,5 +14,5 @@ export interface Post {
     featuredImageUrl?: string | null;
     publishOn?: Date | null;
     metaOptions?: MetaOptions | null;
-    tags?: string[] | null;
+    tags?: Tags[] | null;
 }
