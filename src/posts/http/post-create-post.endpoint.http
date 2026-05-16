@@ -4,14 +4,14 @@ Content-Type: application/json
 {
     "title": "Angular is opinioneted framework",
     "postType": "POST",
-    "slug": "angular",
-    "status": "DRAFT"
-    // "content": "tets Content",
-    // "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
-    // "featuredImageUrl": "www.sample.com",
-    // "publishOn": "2024-03-16T07:46:32+0000",
-    // "tags": ["NestJS", "TypeScript"],
-    // "metaOptions": {
-    //     "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"
-    // }
+    "slug": "angular-js",
+    "status": "DRAFT",
+    "content": "tets Content",
+    "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
+    "featuredImageUrl": "www.sample.com",
+    "publishOn": "2024-03-16T07:46:32+0000",
+    "tags": ["NestJS", "TypeScript"],
+    "metaOptions": {
+        "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"
+    }
 }

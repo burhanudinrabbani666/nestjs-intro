@@ -39,25 +39,7 @@ export class PostsService {
 
     // TODO: adding slug guard
     public async createNewPost(createNewPostDto: CreateNewPostDto) {
-        // Create metaOptions
-        const metaOptions = createNewPostDto.metaOptions
-            ? this.metaOptionsRepository.create(createNewPostDto.metaOptions)
-            : null;
-
-        if (metaOptions) {
-            await this.metaOptionsRepository.save(metaOptions);
-        }
-
-        // Check Tags
-
-        // Create post
-        const post = this.postRepository.create(createNewPostDto);
-
-        // add metaOptions to the post
-        if (metaOptions) {
-            post.metaOptions = metaOptions;
-        }
-        // return the post
+        const post = this.postRepository.create(createNewPostDto); // metaOptions is cascade
         return this.postRepository.save(post);
     }
 }
