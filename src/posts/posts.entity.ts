@@ -12,7 +12,7 @@ import { MetaOptions } from '../meta-options/meta-options.entity';
 @Entity()
 export class Posts {
     @PrimaryGeneratedColumn()
-    id!: number;
+    id?: number;
 
     @Column({
         type: 'varchar',

@@ -30,6 +30,6 @@ export class PostsController {
 
     @Post()
     public createNewPost(@Body() createNewPostDto: CreateNewPostDto) {
-        console.log(createNewPostDto);
+        return this.postService.createNewPost(createNewPostDto);
     }
 }

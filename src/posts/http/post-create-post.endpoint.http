@@ -2,20 +2,16 @@ POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "title": "Nestjs is opinioneted framework",
+    "title": "Angular is opinioneted framework",
     "postType": "POST",
-    "slug": "nest-js",
-    "status": "DRAFT",
-    "content": "tets Content",
-    "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
-    "featuredImageUrl": "www.sample.com",
-    "publishOn": "2024-03-16T07:46:32+0000",
-    "tags": ["NestJS", "TypeScript"],
-    "metaOptions": [
-        {
-            "key": "Test key",
-            "value" : 23
-        }
-    ]
-
+    "slug": "angular",
+    "status": "DRAFT"
+    // "content": "tets Content",
+    // "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
+    // "featuredImageUrl": "www.sample.com",
+    // "publishOn": "2024-03-16T07:46:32+0000",
+    // "tags": ["NestJS", "TypeScript"],
+    // "metaOptions": {
+    //     "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"
+    // }
 }
