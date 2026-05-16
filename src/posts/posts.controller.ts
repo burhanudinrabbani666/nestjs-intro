@@ -1,11 +1,4 @@
-import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    ParseIntPipe,
-    Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateNewPostDto } from './dto/create-post.dto';
@@ -23,9 +16,9 @@ export class PostsController {
     /**
      * GET localhost:3000/posts/:userId
      */
-    @Get('{/:userId}')
-    public getPosts(@Param('userId', ParseIntPipe) userId: number) {
-        return this.postService.findAll(userId);
+    @Get()
+    public getPosts() {
+        return this.postService.findAll();
     }
 
     @Post()

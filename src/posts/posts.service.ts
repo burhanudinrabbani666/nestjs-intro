@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MetaOptions } from '../meta-options/meta-options.entity';
 import { Repository } from 'typeorm';
 import { Posts } from './posts.entity';
+import { Post } from './interface/post.interface';
 
 @Injectable()
 export class PostsService {
@@ -20,25 +21,20 @@ export class PostsService {
         private readonly postRepository: Repository<Posts>,
     ) {}
 
-    public findAll(userId: number) {
-        const user = this.usersService.findOneById(userId);
+    public async findAll(): Promise<Post[]> {
+        const post = await this.postRepository.find({
+            relations: {
+                metaOptions: true,
+            },
+        });
 
-        return [
-            {
-                user,
-                title: 'Test Title1',
-                content: 'content1',
-            },
-            {
-                user,
-                title: 'Test Title2',
-                content: 'content2',
-            },
-        ];
+        return post;
     }
 
     // TODO: adding slug guard
-    public async createNewPost(createNewPostDto: CreateNewPostDto) {
+    public async createNewPost(
+        createNewPostDto: CreateNewPostDto,
+    ): Promise<Post> {
         const post = this.postRepository.create(createNewPostDto); // metaOptions is cascade
         return this.postRepository.save(post);
     }
