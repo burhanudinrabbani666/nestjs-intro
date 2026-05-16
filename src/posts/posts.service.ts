@@ -26,7 +26,10 @@ export class PostsService {
 
     public async findAll(): Promise<Post[]> {
         const post = await this.postRepository.find({
-            relations: { metaOptions: true },
+            relations: {
+                metaOptions: true,
+                // author: true,
+            },
         });
 
         return post;
