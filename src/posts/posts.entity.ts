@@ -66,18 +66,15 @@ export class Posts {
     publishOn?: Date;
 
     // TODO:
-    /** 
-     * 
     @Column({
         type: 'simple-array',
         nullable: true,
     })
     tags?: string[];
-    
+
     @Column({
         type: 'array',
         nullable: true,
     })
     metaOptions?: CreatePostMetaOptions[];
-    */
 }
