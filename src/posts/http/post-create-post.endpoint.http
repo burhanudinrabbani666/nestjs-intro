@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "title": "Angular Is created By Google",
     "postType": "POST",
-    "slug": "angular-js-google-framework",
+    "slug": "angular-js-google-framework3",
     "status": "DRAFT",
     "content": "tets Content",
     "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
@@ -15,5 +15,5 @@ Content-Type: application/json
         "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"
     },
     "authorId": 1,
-    "tags": [2]
+    "tags": [1]
 }

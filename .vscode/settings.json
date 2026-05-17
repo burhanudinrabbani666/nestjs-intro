@@ -6,7 +6,7 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "nestjs_blog",
+            "name": "nestjs_intro",
             "database": "nestjs_blog",
             "username": "rabbani"
         }

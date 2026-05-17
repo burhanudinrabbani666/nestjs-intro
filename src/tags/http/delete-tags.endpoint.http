@@ -1,0 +1,9 @@
+## Delete tag by query 
+
+DELETE http://localhost:3000/tags
+?id=2
+
+
+### Soft Delete
+DELETE http://localhost:3000/tags/soft-delete
+?id=3

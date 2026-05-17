@@ -49,7 +49,9 @@ export class Tags {
     })
     featuredImageUrl?: string;
 
-    @ManyToMany(() => Posts, (posts) => posts.tags, { eager: true })
+    @ManyToMany(() => Posts, (posts) => posts.tags, {
+        onDelete: 'CASCADE',
+    })
     post?: Posts[];
 
     // https://typeorm.io/docs/help/decorator-reference/

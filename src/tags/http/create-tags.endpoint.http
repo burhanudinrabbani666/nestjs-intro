@@ -3,7 +3,7 @@ POST http://localhost:3000/tags
 Content-Type: application/json
 
 {
-    "name": "Modern JavaScript",
-    "slug": "modern-javascript",
-    "description": "This tag is used for posts related to JavaScript topics."
+    "name": "NestJs",
+    "slug": "nest-js",
+    "description": "This tag is used for posts related to nest-js topics."
 }

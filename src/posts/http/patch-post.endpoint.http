@@ -3,12 +3,12 @@ PATCH http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "id": 5, 
+    "id": 6, 
     "title": "ReactJS is Lame",
     "postType": "POST",
-    "slug": "react-js",
+    "slug": "react-js2",
     "status": "DRAFT",
     "content": "tets Content",
-    "tags": [1, 2]
+    "tags": [1,3]
 
 }
