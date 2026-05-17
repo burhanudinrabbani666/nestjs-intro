@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException, Patch } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateNewPostDto } from './dto/create-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { Post } from './interface/post.interface';
 import { User } from '../users/users.entity';
 import { TagsService } from '../tags/tags.service';
 import { Tags } from '../tags/tags.entity';
+import { PatchPostDto } from './dto/patch-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -30,6 +31,10 @@ export class PostsService {
         private readonly tagsService: TagsService,
     ) {}
 
+    /** ----------------------------------------------------------------|
+     * Fetch all Post Including author, tags and MetaOptions            |
+     * The way we Querying tags and Author is by options in post entity |
+     */ // -------------------------------------------------------------|
     public async findAll(): Promise<Post[]> {
         const post = await this.postRepository.find({
             relations: {
@@ -70,5 +75,30 @@ export class PostsService {
 
     public async deletePosts(postId: number) {
         return this.postRepository.delete(postId);
+    }
+
+    @Patch()
+    public async updatePost(@Body() patchPostDTo: PatchPostDto) {
+        let tags: Tags[] = [];
+        if (patchPostDTo.tags)
+            tags = await this.tagsService.findMultipleTags(patchPostDTo.tags);
+
+        const post = await this.postRepository.findOne({
+            where: { id: patchPostDTo.id },
+        });
+
+        if (!post) throw new NotFoundException();
+
+        const { featuredImageUrl: NewFeaturedImage } = patchPostDTo;
+        post.title = patchPostDTo.title ?? post.title;
+        post.content = patchPostDTo.content ?? post.content;
+        post.status = patchPostDTo.status ?? post.status;
+        post.postType = patchPostDTo.postType ?? post.postType;
+        post.slug = patchPostDTo.slug ?? post.slug;
+        post.featuredImageUrl = NewFeaturedImage ?? post.featuredImageUrl;
+        post.publishOn = patchPostDTo.publishOn ?? post.publishOn;
+        post.tags = tags;
+
+        return this.postRepository.save(post);
     }
 }

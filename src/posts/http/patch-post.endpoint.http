@@ -1,0 +1,14 @@
+### Update Post 
+PATCH http://localhost:3000/posts
+Content-Type: application/json
+
+{
+    "id": 5, 
+    "title": "ReactJS is Lame",
+    "postType": "POST",
+    "slug": "react-js",
+    "status": "DRAFT",
+    "content": "tets Content",
+    "tags": [1, 2]
+
+}

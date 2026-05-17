@@ -4,12 +4,16 @@ import {
     Delete,
     Get,
     ParseIntPipe,
+    Patch,
     Post,
     Query,
 } from '@nestjs/common';
-import { PostsService } from './posts.service';
 import { ApiTags } from '@nestjs/swagger';
+
+import { PostsService } from './posts.service';
 import { CreateNewPostDto } from './dto/create-post.dto';
+import { PatchPostDto } from './dto/patch-post.dto';
+import { Posts } from './posts.entity';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -37,5 +41,12 @@ export class PostsController {
     @Delete()
     public deletePosts(@Query('id', ParseIntPipe) id: number) {
         return this.postService.deletePosts(id);
+    }
+
+    @Patch()
+    public async updatePost(
+        @Body() patchPostDto: PatchPostDto,
+    ): Promise<Posts> {
+        return this.postService.updatePost(patchPostDto);
     }
 }
