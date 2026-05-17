@@ -9,19 +9,22 @@ import { Repository } from 'typeorm';
 import { User } from './users.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-users.dto';
+import { ConfigService } from '@nestjs/config';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
 export class UsersService {
-    /**
-     * Exports AuthServices
-     * Injecting Repository
-     * */
+    /** ------------------------------------------------|
+     * Exports AuthServices                             |
+     * Injecting Repository                             |
+     * Injetinf ConfigService                           |
+     * */ //--------------------------------------------|
     constructor(
         @Inject(forwardRef(() => AuthService))
         private readonly authService: AuthService,
         @InjectRepository(User)
         private usersRepository: Repository<User>,
+        private readonly configService: ConfigService,
     ) {}
 
     public async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -37,6 +40,9 @@ export class UsersService {
 
     /** The Method to get all users from database */
     public findAll(limit: number, page: number) {
+        const env = this.configService.get<string>('S3_BUCKET');
+        console.log(env);
+
         const isAuth = this.authService.isAuth();
         console.log(isAuth);
         console.log(limit);
