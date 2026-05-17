@@ -13,12 +13,13 @@ import { Tags } from '../tags/tags.entity';
 @Injectable()
 export class PostsService {
     constructor(
-        /**
-         * Injecting UserService
-         * Injecting tagsService
-         * Injecting metaOptions
-         * Injecting userRepository
-         */
+        /** ------------------------------------------------|
+         * Injecting UserService                            |
+         * Injecting tagsService                            |
+         * Injecting metaOptions                            |
+         * Injecting userRepository                         |
+         */ //----------------------------------------------|
+
         private readonly usersService: UsersService,
         @InjectRepository(MetaOptions)
         private readonly metaOptionsRepository: Repository<MetaOptions>,
@@ -33,7 +34,9 @@ export class PostsService {
         const post = await this.postRepository.find({
             relations: {
                 metaOptions: true,
-                // author: true,
+                // TODO: Dont Showing Password
+                // tags: true,
+                //author: true,
             },
         });
 
