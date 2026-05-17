@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+
 import { AppController } from './app/app.controller';
 import { AppService } from './app/app.service';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
 
@@ -12,6 +14,9 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
     imports: [
         UsersModule,
         PostsModule,
+        ConfigModule.forRoot({
+            isGlobal: true,
+        }),
         AuthModule,
         TypeOrmModule.forRootAsync({
             imports: [],
@@ -24,8 +29,8 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
                 database: 'nestjs_blog',
                 username: 'rabbani',
                 password: 'rabbani',
-                // entities: [User, Posts],
                 autoLoadEntities: true,
+                // entities: [User, Posts],
             }),
         }),
         TagsModule,

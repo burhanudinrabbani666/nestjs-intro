@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "title": "Angular Is created By Google",
     "postType": "POST",
-    "slug": "angular-js-google-framework3",
+    "slug": "angular-js-google-framework4",
     "status": "DRAFT",
     "content": "tets Content",
     "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
