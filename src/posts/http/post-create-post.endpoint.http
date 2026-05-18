@@ -4,12 +4,12 @@ Content-Type: application/json
 {
     "title": "Angular Is created By Google",
     "postType": "POST",
-    "slug": "angular-js-google-framework4",
+    "slug": "angular-js18",
     "status": "DRAFT",
     "content": "tets Content",
     "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
     "featuredImageUrl": "www.sample.com",
-    "publishOn": "2024-03-16T07:46:32+0000",
+    "publishOn": "2026-05-18T11:36:50.512Z",
     "tags": ["NestJS", "TypeScript"],
     "metaOptions": {
         "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"

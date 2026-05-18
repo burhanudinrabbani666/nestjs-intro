@@ -32,7 +32,7 @@ export class PostsController {
      */
     @Get()
     public getPosts(@Query() postQuery: GetPostsDto) {
-        console.log(postQuery);
+        return this.postService.findAll(postQuery);
     }
 
     @Post()

@@ -1,5 +1,6 @@
 import {
     IsArray,
+    IsDate,
     IsEnum,
     IsInt,
     IsISO8601,
@@ -93,7 +94,7 @@ export class CreateNewPostDto {
     })
     featuredImageUrl?: string;
 
-    @IsISO8601()
+    @IsDate()
     @IsOptional()
     @ApiPropertyOptional({
         description: 'The date on which the blog post was publish',

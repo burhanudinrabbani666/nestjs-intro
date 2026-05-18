@@ -17,6 +17,7 @@ import { User } from '../users/users.entity';
 import { TagsService } from '../tags/tags.service';
 import { Tags } from '../tags/tags.entity';
 import { PatchPostDto } from './dto/patch-post.dto';
+import { GetPostsDto } from './dto/get-posts.dtos';
 
 @Injectable()
 export class PostsService {
@@ -42,9 +43,12 @@ export class PostsService {
      * Fetch all Post Including author, tags and MetaOptions            /
      * The way we Querying tags and Author is by options in post entity /
      ----------------------------------------------------------------- */
-    public async findAll(): Promise<Post[]> {
+    public async findAll(postQuery: GetPostsDto): Promise<Post[]> {
+        const { limit, page, startDate, endDate } = postQuery;
+
         const post = await this.postRepository.find({
-            relations: { metaOptions: true },
+            take: limit ? limit : 10,
+            skip: (page ? page - 1 : 0) * (limit ? limit : 10),
         });
 
         return post;
