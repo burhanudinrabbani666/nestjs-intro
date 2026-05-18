@@ -19,6 +19,7 @@ import { Tags } from '../tags/tags.entity';
 import { PatchPostDto } from './dto/patch-post.dto';
 import { GetPostsDto } from './dto/get-posts.dtos';
 import { PaginationProvider } from '../common/pagination/provider/pagination.provider';
+import { Paginated } from '../common/pagination/interface/paginated.interface';
 
 @Injectable()
 export class PostsService {
@@ -46,7 +47,7 @@ export class PostsService {
      * Fetch all Post Including author, tags and MetaOptions            /
      * The way we Querying tags and Author is by options in post entity /
      ----------------------------------------------------------------- */
-    public async findAll(postQuery: GetPostsDto): Promise<Post[]> {
+    public async findAll(postQuery: GetPostsDto): Promise<Paginated<Post>> {
         const posts = await this.paginationProvider.paginateQuery(
             {
                 limit: postQuery.limit,

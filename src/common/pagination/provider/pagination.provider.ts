@@ -3,6 +3,7 @@ import { PaginationQueryDto } from '../dtos/pagination-query.dto';
 import { ObjectLiteral, Repository } from 'typeorm';
 import { REQUEST } from '@nestjs/core';
 import { type Request } from 'express';
+import { Paginated } from '../interface/paginated.interface';
 
 @Injectable()
 export class PaginationProvider {
@@ -14,7 +15,7 @@ export class PaginationProvider {
     public async paginateQuery<T extends ObjectLiteral>(
         paginationQuery: PaginationQueryDto,
         repository: Repository<T>,
-    ) {
+    ): Promise<Paginated<T>> {
         const { limit, page } = paginationQuery;
         const result = await repository.find({
             take: limit ? limit : 10,
@@ -34,7 +35,9 @@ export class PaginationProvider {
          */
 
         const totalItems = await repository.count();
-        const totalPages = Math.ceil(totalItems / (paginationQuery.limit ?? 1));
+        const totalPages = Math.ceil(
+            totalItems / (paginationQuery.limit ?? 10),
+        );
         const nextPage =
             paginationQuery.page === totalPages
                 ? paginationQuery.page
@@ -44,6 +47,22 @@ export class PaginationProvider {
                 ? paginationQuery.page
                 : (paginationQuery.page ?? 1) - 1;
 
-        return result;
+        const finalResponse: Paginated<T> = {
+            data: result,
+            meta: {
+                itemPerPage: limit ?? 10,
+                totalNumbers: totalItems,
+                currentPage: paginationQuery.page ?? 1,
+                totalPage: totalPages,
+            },
+            links: {
+                first: `${newUrl.origin}${newUrl.pathname}?limit=${paginationQuery.limit}&page=1`,
+                last: `${newUrl.origin}${newUrl.pathname}?limit=${paginationQuery.limit}&page=${totalPages}`,
+                current: `${newUrl.origin}${newUrl.pathname}?limit=${paginationQuery.limit}&page=${paginationQuery.page}`,
+                next: `${newUrl.origin}${newUrl.pathname}?limit=${paginationQuery.limit}&page=${nextPage}`,
+                previous: `${newUrl.origin}${newUrl.pathname}?limit=${paginationQuery.limit}&page=${previousPage}`,
+            },
+        };
+        return finalResponse;
     }
 }
