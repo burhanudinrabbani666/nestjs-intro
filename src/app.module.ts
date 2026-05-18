@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import appConfig from './config/configuration';
 import databaseConfig from './config/database.config';
+import environmentValidation from './config/environment.validation';
 
 import { AppController } from './app/app.controller';
 import { AppService } from './app/app.service';
@@ -23,6 +24,7 @@ const ENV = process.env.NODE_ENV;
             isGlobal: true,
             envFilePath: !ENV ? '.env' : `.env.${ENV}.local`,
             load: [appConfig, databaseConfig],
+            validationSchema: environmentValidation,
         }),
         AuthModule,
         TypeOrmModule.forRootAsync({

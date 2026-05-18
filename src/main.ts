@@ -13,9 +13,9 @@ async function bootstrap() {
         }),
     );
 
-    /**
-     * Swagger Documentation
-     */
+    /** ----------------------------|
+     * Swagger Documentation        |
+     */ // -------------------------|
     const config = new DocumentBuilder()
         .setTitle('NestJS MasterClass - Blog app API')
         .setDescription('Use the base API URL as http://localhost:3000')
