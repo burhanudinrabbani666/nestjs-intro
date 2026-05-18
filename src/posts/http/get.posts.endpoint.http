@@ -1,2 +1,6 @@
 ### 
 GET http://localhost:3000/posts/
+?startDate={{$datetime iso8601}}
+&endDate={{$datetime iso8601}}
+&limit=10
+&page=1

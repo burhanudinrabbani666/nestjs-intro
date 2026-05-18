@@ -10,12 +10,15 @@ async function bootstrap() {
             whitelist: true,
             forbidNonWhitelisted: true,
             transform: true,
+            transformOptions: {
+                enableImplicitConversion: true,
+            },
         }),
     );
 
-    /** ----------------------------/
-     * Swagger Documentation        /
-     ------------------------------*/
+    /** --------------------------------------- /
+     * Swagger Documentation Config             /
+     ----------------------------------------- */
     const config = new DocumentBuilder()
         .setTitle('NestJS MasterClass - Blog app API')
         .setDescription('Use the base API URL as http://localhost:3000')

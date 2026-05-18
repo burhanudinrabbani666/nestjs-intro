@@ -3,6 +3,7 @@ import {
     Controller,
     Delete,
     Get,
+    Param,
     ParseIntPipe,
     Patch,
     Post,
@@ -14,14 +15,15 @@ import { PostsService } from './posts.service';
 import { CreateNewPostDto } from './dto/create-post.dto';
 import { PatchPostDto } from './dto/patch-post.dto';
 import { Posts } from './posts.entity';
+import { GetPostsDto } from './dto/get-posts.dtos';
 
 @Controller('posts')
 @ApiTags('Posts')
 export class PostsController {
     constructor(
-        /**
-         * Injecting Post Service
-         */
+        /** --------------------------- /
+         * Injecting Post Service       /
+         ----------------------------- */
         private readonly postService: PostsService,
     ) {}
 
@@ -29,8 +31,8 @@ export class PostsController {
      * GET localhost:3000/posts/:userId
      */
     @Get()
-    public getPosts() {
-        return this.postService.findAll();
+    public getPosts(@Query() postQuery: GetPostsDto) {
+        console.log(postQuery);
     }
 
     @Post()
