@@ -1,6 +1,8 @@
 import {
     ConflictException,
     forwardRef,
+    HttpException,
+    HttpStatus,
     Inject,
     Injectable,
     NotFoundException,
@@ -12,10 +14,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import profileConfig from './config/profile.config';
 
 import { AuthService } from '../auth/auth.service';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { User } from './users.entity';
 import { CreateUserDto } from './dto/create-users.dto';
-import { NotFoundError } from 'rxjs';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
@@ -24,6 +25,7 @@ export class UsersService {
      * Exports AuthServices                                         /
      * Injecting Repository                                         /
      * Injeting profileConfig                                       /
+     * Injecting DataSource                                         /
       ------------------------------------------------------------ */
     constructor(
         @Inject(forwardRef(() => AuthService))
@@ -32,6 +34,8 @@ export class UsersService {
         private usersRepository: Repository<User>,
         @Inject(profileConfig.KEY)
         private readonly profileConfiguration: ConfigType<typeof profileConfig>,
+        @Inject(DataSource)
+        private readonly dataSource: DataSource,
     ) {}
 
     /** ----------------------------------------------------------- /
@@ -80,24 +84,17 @@ export class UsersService {
      * 408: Failed Connect to database, timeout!                    /
         ---------------------------------------------------------- */
     public findAll(limit: number, page: number) {
-        // Test config
-        console.log(this.profileConfiguration);
-        console.log(this.profileConfiguration.apiKey);
-
-        return [
+        throw new HttpException(
             {
-                firstName: 'burhanudin',
-                email: 'bani@bani.io',
+                status: HttpStatus.MOVED_PERMANENTLY,
+                error: 'The Api Endpoint does not exist',
             },
+            HttpStatus.MOVED_PERMANENTLY,
             {
-                firstName: 'Nico',
-                email: 'nico@nico.io',
+                description:
+                    'Occured because the API endpoint was permanently moved',
             },
-            {
-                firstName: 'Aziz',
-                email: 'aziz@aziz.io',
-            },
-        ];
+        );
     }
 
     /** ----------------------------------------------------------- /
@@ -123,6 +120,37 @@ export class UsersService {
                 'Unable to proccess at the moment please try later',
                 { description: 'Error connecting to the database' },
             );
+        }
+    }
+
+    public async createManyUser(createUsersDto: CreateUserDto[]) {
+        let newUsers: User[] = [];
+        // Create query Runnner instance
+        const queryRunner = this.dataSource.createQueryRunner();
+
+        // Connect uery to database
+        await queryRunner.connect();
+
+        // Start Transaction
+        await queryRunner.startTransaction();
+
+        try {
+            for (const user of createUsersDto) {
+                const newUser = queryRunner.manager.create(User, user);
+                const result = await queryRunner.manager.save(newUser);
+                newUsers.push(result);
+            }
+
+            // If Succesfull commit
+
+            await queryRunner.commitTransaction();
+        } catch (error) {
+            console.log(error);
+            // If Unuccesfull roolback
+            await queryRunner.rollbackTransaction();
+        } finally {
+            // Release Connsection
+            await queryRunner.release();
         }
     }
 }
