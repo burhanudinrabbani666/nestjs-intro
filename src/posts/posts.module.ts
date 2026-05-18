@@ -8,9 +8,11 @@ import { MetaOptionsModule } from '../meta-options/meta-options.module';
 import { MetaOptions } from '../meta-options/meta-options.entity';
 import { User } from '../users/users.entity';
 import { TagsModule } from '../tags/tags.module';
+import { PaginationModule } from '../common/pagination/pagination.module';
 
 @Module({
     imports: [
+        PaginationModule,
         UsersModule,
         MetaOptionsModule,
         TagsModule,

@@ -18,6 +18,7 @@ import { TagsService } from '../tags/tags.service';
 import { Tags } from '../tags/tags.entity';
 import { PatchPostDto } from './dto/patch-post.dto';
 import { GetPostsDto } from './dto/get-posts.dtos';
+import { PaginationProvider } from '../common/pagination/provider/pagination.provider';
 
 @Injectable()
 export class PostsService {
@@ -28,6 +29,7 @@ export class PostsService {
          * Injecting tagsService                            /
          * Injecting metaOptions                            /
          * Injecting userRepository                         /
+         * Injecting paginationProvider                     /
          ------------------------------------------------- */
         private readonly usersService: UsersService,
         @InjectRepository(MetaOptions)
@@ -37,6 +39,7 @@ export class PostsService {
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
         private readonly tagsService: TagsService,
+        private readonly paginationProvider: PaginationProvider,
     ) {}
 
     /** --------------------------------------------------------------- /
@@ -44,14 +47,15 @@ export class PostsService {
      * The way we Querying tags and Author is by options in post entity /
      ----------------------------------------------------------------- */
     public async findAll(postQuery: GetPostsDto): Promise<Post[]> {
-        const { limit, page, startDate, endDate } = postQuery;
+        const posts = await this.paginationProvider.paginateQuery(
+            {
+                limit: postQuery.limit,
+                page: postQuery.page,
+            },
+            this.postRepository,
+        );
 
-        const post = await this.postRepository.find({
-            take: limit ? limit : 10,
-            skip: (page ? page - 1 : 0) * (limit ? limit : 10),
-        });
-
-        return post;
+        return posts;
     }
 
     public async createNewPost(
