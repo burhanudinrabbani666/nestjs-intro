@@ -17,6 +17,8 @@ import { AuthService } from '../auth/auth.service';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './users.entity';
 import { CreateUserDto } from './dto/create-users.dto';
+import { UsersCreateManyProvider } from './provider/users-create-many.provider';
+import { CreateManyUsersDto } from './dto/create-many-users.dto';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
@@ -36,6 +38,7 @@ export class UsersService {
         private readonly profileConfiguration: ConfigType<typeof profileConfig>,
         @Inject(DataSource)
         private readonly dataSource: DataSource,
+        private readonly usersCreateManyProvider: UsersCreateManyProvider,
     ) {}
 
     /** ----------------------------------------------------------- /
@@ -83,18 +86,8 @@ export class UsersService {
      * 500: Internal Server Error                                   /
      * 408: Failed Connect to database, timeout!                    /
         ---------------------------------------------------------- */
-    public findAll(limit: number, page: number) {
-        throw new HttpException(
-            {
-                status: HttpStatus.MOVED_PERMANENTLY,
-                error: 'The Api Endpoint does not exist',
-            },
-            HttpStatus.MOVED_PERMANENTLY,
-            {
-                description:
-                    'Occured because the API endpoint was permanently moved',
-            },
-        );
+    public findAll(limit?: number, page?: number) {
+        return this.usersRepository.find();
     }
 
     /** ----------------------------------------------------------- /
@@ -123,34 +116,7 @@ export class UsersService {
         }
     }
 
-    public async createManyUser(createUsersDto: CreateUserDto[]) {
-        let newUsers: User[] = [];
-        // Create query Runnner instance
-        const queryRunner = this.dataSource.createQueryRunner();
-
-        // Connect uery to database
-        await queryRunner.connect();
-
-        // Start Transaction
-        await queryRunner.startTransaction();
-
-        try {
-            for (const user of createUsersDto) {
-                const newUser = queryRunner.manager.create(User, user);
-                const result = await queryRunner.manager.save(newUser);
-                newUsers.push(result);
-            }
-
-            // If Succesfull commit
-
-            await queryRunner.commitTransaction();
-        } catch (error) {
-            console.log(error);
-            // If Unuccesfull roolback
-            await queryRunner.rollbackTransaction();
-        } finally {
-            // Release Connsection
-            await queryRunner.release();
-        }
+    public async createManyUsers(createManyUserDto: CreateManyUsersDto) {
+        return this.usersCreateManyProvider.createManyUser(createManyUserDto);
     }
 }

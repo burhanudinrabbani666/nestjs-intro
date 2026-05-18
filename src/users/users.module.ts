@@ -8,10 +8,11 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
 import { AuthModule } from '../auth/auth.module';
+import { UsersCreateManyProvider } from './provider/users-create-many.provider';
 
 @Module({
     controllers: [UsersController],
-    providers: [UsersService],
+    providers: [UsersService, UsersCreateManyProvider],
     exports: [UsersService],
     imports: [
         forwardRef(() => AuthModule),

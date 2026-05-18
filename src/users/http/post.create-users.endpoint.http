@@ -1,0 +1,20 @@
+### Creating New Users
+POST http://localhost:3000/users/create-many
+Content-Type: application/json
+
+{
+    "users": [
+        {
+          "firstName": "Burhanudin",
+          "lastName": "Rabbani",
+          "email": "ganteng@ganteng.io",
+          "password": "banibani1234*"
+        },
+        {
+          "firstName": "Risaldi",
+          "lastName": "Sedeki",
+          "email": "risl@risal.io",
+          "password": "banibani1234*"
+        }
+    ]
+}
