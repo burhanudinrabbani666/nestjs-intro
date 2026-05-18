@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+import appConfig from './config/configuration';
+import databaseConfig from './config/database.config';
+
 import { AppController } from './app/app.controller';
 import { AppService } from './app/app.service';
 import { UsersModule } from './users/users.module';
@@ -9,7 +12,6 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
-import { appConfig } from './config/configuration';
 
 const ENV = process.env.NODE_ENV;
 
@@ -20,7 +22,7 @@ const ENV = process.env.NODE_ENV;
         ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: !ENV ? '.env' : `.env.${ENV}.local`,
-            load: [appConfig],
+            load: [appConfig, databaseConfig],
         }),
         AuthModule,
         TypeOrmModule.forRootAsync({
