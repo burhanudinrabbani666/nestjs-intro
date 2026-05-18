@@ -1,4 +1,2 @@
-DROP TABLE meta_options;
-DROP TABLE tags;
-DROP TABLE "user";
-DROP TABLE posts;
+DELETE FROM "user"
+WHERE id = 3
