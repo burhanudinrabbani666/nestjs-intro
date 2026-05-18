@@ -2,10 +2,12 @@ import { Module, forwardRef } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
+import { HasingProviders } from './providers/hasing.providers';
+import { BcryptProviders } from './providers/bcrypt.providers';
 
 @Module({
     controllers: [AuthController],
-    providers: [AuthService],
+    providers: [AuthService, HasingProviders, BcryptProviders],
     exports: [AuthService],
     imports: [forwardRef(() => UsersModule)],
 })
