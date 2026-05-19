@@ -1,28 +1,26 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
+import { SingInDto } from './dtos/signin.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    /**
-     * Injecting Users Service
-     */
-    @Inject(forwardRef(() => UsersService))
-    private readonly userService: UsersService,
-  ) {}
+    constructor(
+        /**
+         * Injecting Users Service
+         */
+        @Inject(forwardRef(() => UsersService))
+        private readonly userService: UsersService,
+    ) {}
 
-  public login(email: string, password: string, id: string) {
-    const user = this.userService.findOneById(1234);
-    /**
-     * Check User exist database
-     * login
-     * Token
-     */
+    public signIn(singInDto: SingInDto) {
+        // Find the User using Email ID
+        // User not Found? Throw execption
+        // Compare the password
+        // Send Confirmation
+    }
 
-    return 'SAMPLE_TOKEN';
-  }
-
-  public isAuth() {
-    return true;
-  }
+    public isAuth() {
+        return true;
+    }
 }

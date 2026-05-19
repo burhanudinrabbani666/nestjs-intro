@@ -20,6 +20,7 @@ import { CreateUserDto } from './dto/create-users.dto';
 import { UsersCreateManyProvider } from './provider/users-create-many.provider';
 import { CreateManyUsersDto } from './dto/create-many-users.dto';
 import { CreateUserProviders } from './providers/create-user.providers';
+import { FindOneUserByEmailProviders } from './providers/find-one-user-by-email.providers';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
@@ -51,6 +52,9 @@ export class UsersService {
 
         //--------------------------------------------------------------------
         private readonly createUserProviders: CreateUserProviders,
+
+        //--------------------------------------------------------------------
+        private readonly findOneUserByEmailProviders: FindOneUserByEmailProviders,
     ) {}
 
     /** ----------------------------------------------------------- /
@@ -95,5 +99,9 @@ export class UsersService {
 
     public async createManyUsers(createManyUserDto: CreateManyUsersDto) {
         return this.usersCreateManyProvider.createManyUser(createManyUserDto);
+    }
+
+    public async FindOneUserByEmail(email: string) {
+        return await this.findOneUserByEmailProviders.findOneByEmail(email);
     }
 }
