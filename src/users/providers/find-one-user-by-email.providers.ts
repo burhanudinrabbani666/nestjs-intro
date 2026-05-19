@@ -1,4 +1,5 @@
 import {
+    HttpException,
     Injectable,
     InternalServerErrorException,
     UnauthorizedException,
@@ -6,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users.entity';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class FindOneUserByEmailProviders {
@@ -15,18 +17,14 @@ export class FindOneUserByEmailProviders {
     ) {}
 
     public async findOneByEmail(email: string): Promise<User> {
-        try {
-            const user = await this.userRepository.findOne({
-                where: { email },
-            });
+        const user = await this.userRepository.findOne({
+            where: { email },
+        });
+        if (!user)
+            throw new UnauthorizedException(
+                'User Not Found. Please check your Credential',
+            );
 
-            if (!user) throw new UnauthorizedException();
-
-            return user;
-        } catch (error) {
-            throw new InternalServerErrorException('Coul not Fetch the User', {
-                cause: error,
-            });
-        }
+        return user;
     }
 }
