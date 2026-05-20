@@ -9,6 +9,7 @@ import { HasingProviders } from './providers/hasing.providers';
 import { BcryptProviders } from './providers/bcrypt.providers';
 import { SignInProviders } from './providers/signin.providers';
 import { GenerateTokenProvider } from './providers/generate-token.provider';
+import { RefreshTokenProviders } from './providers/refresh-token.providers';
 import jwtConfig from './config/jwt.config';
 
 @Module({
@@ -21,6 +22,7 @@ import jwtConfig from './config/jwt.config';
         },
         SignInProviders,
         GenerateTokenProvider,
+        RefreshTokenProviders,
     ],
     exports: [AuthService, HasingProviders],
     imports: [
