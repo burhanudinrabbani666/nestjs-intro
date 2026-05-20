@@ -18,6 +18,7 @@ import { CreateManyUsersDto } from './dto/create-many-users.dto';
 import { CreateUserProviders } from './providers/create-user.providers';
 import { FindOneUserByEmailProviders } from './providers/find-one-user-by-email.providers';
 import { UsersCreateManyProvider } from './providers/users-create-many.provider';
+import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
@@ -52,6 +53,9 @@ export class UsersService {
 
         //--------------------------------------------------------------------
         private readonly findOneUserByEmailProviders: FindOneUserByEmailProviders,
+
+        //--------------------------------------------------------------------
+        private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
     ) {}
 
     /** ----------------------------------------------------------- /
@@ -99,5 +103,9 @@ export class UsersService {
 
     public async FindOneUserByEmail(email: string) {
         return await this.findOneUserByEmailProviders.findOneByEmail(email);
+    }
+
+    public async findOneByGoogleId(googleId: string) {
+        return this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
     }
 }

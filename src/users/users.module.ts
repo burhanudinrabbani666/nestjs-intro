@@ -11,6 +11,7 @@ import { AuthModule } from '../auth/auth.module';
 import { CreateUserProviders } from './providers/create-user.providers';
 import { FindOneUserByEmailProviders } from './providers/find-one-user-by-email.providers';
 import { UsersCreateManyProvider } from './providers/users-create-many.provider';
+import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
 
 @Module({
     controllers: [UsersController],
@@ -19,6 +20,7 @@ import { UsersCreateManyProvider } from './providers/users-create-many.provider'
         UsersCreateManyProvider,
         CreateUserProviders,
         FindOneUserByEmailProviders,
+        FindOneByGoogleIdProvider,
     ],
     exports: [UsersService],
     imports: [
