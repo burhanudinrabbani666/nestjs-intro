@@ -7,10 +7,10 @@ import {
 } from '@nestjs/common';
 import { type ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Observable } from 'rxjs';
 import jwtConfig from '../../config/jwt.config';
 import { Request } from 'express';
 import { REQUEST_USER_KEY } from '../../constans/auth.constant';
+import { RequestWithUserField } from '../../../common/custom-request/request-with-user';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
@@ -26,8 +26,16 @@ export class AccessTokenGuard implements CanActivate {
         @Inject(jwtConfig.KEY)
         private readonly jwtConfiguraion: ConfigType<typeof jwtConfig>,
     ) {}
-    async canActivate(context: ExecutionContext) {
-        const request = context.switchToHttp().getRequest<Request>();
+
+    /**------------------------------------------------------------------------ /
+     * Get Token from Header. If empty throw error                              /
+     * Verify Jwt Token                                                         /
+     * the custom Request Interaface was extended Request with User field       /
+     ------------------------------------------------------------------------- */
+    public async canActivate(context: ExecutionContext) {
+        const request = context
+            .switchToHttp()
+            .getRequest<RequestWithUserField>();
         const token = this.extractRequestFromHeader(request);
         if (!token) throw new UnauthorizedException();
 
@@ -37,10 +45,9 @@ export class AccessTokenGuard implements CanActivate {
                 this.jwtConfiguraion,
             );
 
-            request[REQUEST_USER_KEY] = payload;
+            request.user = payload;
             console.log(payload);
-        } catch (error) {
-            console.log(error);
+        } catch {
             throw new UnauthorizedException();
         }
 
