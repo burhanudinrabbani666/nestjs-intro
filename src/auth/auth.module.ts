@@ -10,10 +10,12 @@ import { BcryptProviders } from './providers/bcrypt.providers';
 import { SignInProviders } from './providers/signin.providers';
 import { GenerateTokenProvider } from './providers/generate-token.provider';
 import { RefreshTokenProviders } from './providers/refresh-token.providers';
+import { GoggleAuthenticationController } from './social/goggle-authentication.controller';
 import jwtConfig from './config/jwt.config';
+import { GoogleAuthenticationService } from './social/google-authentication.service';
 
 @Module({
-    controllers: [AuthController],
+    controllers: [AuthController, GoggleAuthenticationController],
     providers: [
         AuthService,
         {
@@ -23,6 +25,7 @@ import jwtConfig from './config/jwt.config';
         SignInProviders,
         GenerateTokenProvider,
         RefreshTokenProviders,
+        GoogleAuthenticationService,
     ],
     exports: [AuthService, HasingProviders],
     imports: [

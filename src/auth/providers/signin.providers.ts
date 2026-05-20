@@ -52,7 +52,7 @@ export class SignInProviders {
         // Compare the password
         const isEqual = await this.hasingProviders.comparePassword(
             singInDto.password,
-            user.password,
+            user.password ?? '',
         );
 
         if (!isEqual) throw new UnauthorizedException('Incorrect Password');

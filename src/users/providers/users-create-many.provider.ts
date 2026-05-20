@@ -50,7 +50,7 @@ export class UsersCreateManyProvider {
             for (const user of users) {
                 const newUser = queryRunner.manager.create(User, user);
                 newUser.password = await this.hasingProviders.hashPassword(
-                    newUser.password,
+                    newUser.password ?? '',
                 );
 
                 const result = await queryRunner.manager.save(newUser);
