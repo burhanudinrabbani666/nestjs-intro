@@ -3,7 +3,6 @@ import {
     forwardRef,
     Inject,
     Injectable,
-    RequestTimeoutException,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-users.dto';
 import { InjectRepository } from '@nestjs/typeorm';

@@ -10,6 +10,7 @@ import { HasingProviders } from './hasing.providers';
 import { JwtService } from '@nestjs/jwt';
 import { type ConfigType } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
+import { ActiveUserData } from '../interface/active-users.interface';
 
 @Injectable()
 export class SignInProviders {

@@ -5,7 +5,6 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
 
 import { AccessTokenGuard } from '../access-token/access-token.guard';
 import { AuthType } from '../../enums/auth-type.enum';
@@ -41,12 +40,10 @@ export class AuthenticationGuard implements CanActivate {
             .map((type) => this.AuhtTypeGuardMap[type])
             .flat();
 
-        console.log(guards);
         const error = new UnauthorizedException();
 
         // Loop guard canActivate
         for (const instance of guards) {
-            console.log(instance, '------------------------');
             const canActivated = await Promise.resolve(
                 instance.canActivate(context),
             );

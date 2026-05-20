@@ -3,7 +3,6 @@ import {
     Controller,
     Delete,
     Get,
-    Param,
     ParseIntPipe,
     Patch,
     Post,
@@ -16,6 +15,10 @@ import { CreateNewPostDto } from './dto/create-post.dto';
 import { PatchPostDto } from './dto/patch-post.dto';
 import { Posts } from './posts.entity';
 import { GetPostsDto } from './dto/get-posts.dtos';
+import { Request } from 'express';
+// import { type RequestWithUserField } from '../common/custom-request/request-with-user';
+import { ActiveUser } from '../auth/decarators/active-user-data.decorators';
+import { type ActiveUserData } from '../auth/interface/active-users.interface';
 
 @Controller('posts')
 @ApiTags('Posts')
@@ -35,9 +38,15 @@ export class PostsController {
         return this.postService.findAll(postQuery);
     }
 
+    /**@Body() createNewPostDto: CreateNewPostDto*/
+    // return this.postService.createNewPost(createNewPostDto);
     @Post()
-    public createNewPost(@Body() createNewPostDto: CreateNewPostDto) {
-        return this.postService.createNewPost(createNewPostDto);
+    public createNewPost(
+        @Body() createNewPostDto: CreateNewPostDto,
+        @ActiveUser() user: ActiveUserData,
+    ) {
+        console.log(user);
+        console.log(createNewPostDto);
     }
 
     @Delete()

@@ -1,5 +1,7 @@
 POST http://localhost:3000/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoibmljb0BuaWNvLmlvIiwiaWF0IjoxNzc5MjcxMDQyLCJleHAiOjE3NzkyNzQ2NDIsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.PkPBSduQXIMCiiO-wNJ3i7DpEIZ2xmfqtc6WLNVJYnM
+
 
 {
     "title": "Angular Is created By Google",

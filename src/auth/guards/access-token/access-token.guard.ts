@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '../../config/jwt.config';
 import { Request } from 'express';
 import { RequestWithUserField } from '../../../common/custom-request/request-with-user';
+import { JwtPayloadInterface } from '../../interface/jwt-payload.interface';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
@@ -40,10 +41,8 @@ export class AccessTokenGuard implements CanActivate {
         if (!token) throw new UnauthorizedException();
 
         try {
-            const payload: unknown = await this.jwtService.verifyAsync(
-                token,
-                this.jwtConfiguraion,
-            );
+            const payload: JwtPayloadInterface =
+                await this.jwtService.verifyAsync(token, this.jwtConfiguraion);
 
             request.user = payload;
         } catch {
@@ -54,7 +53,6 @@ export class AccessTokenGuard implements CanActivate {
     }
 
     private extractRequestFromHeader(req: Request) {
-        console.log(req.headers.authorization);
         const [_, token] = req.headers.authorization?.split(' ') ?? [];
         return token;
     }
