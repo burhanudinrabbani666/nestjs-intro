@@ -20,6 +20,8 @@ import { PatchPostDto } from './dto/patch-post.dto';
 import { GetPostsDto } from './dto/get-posts.dtos';
 import { PaginationProvider } from '../common/pagination/provider/pagination.provider';
 import { Paginated } from '../common/pagination/interface/paginated.interface';
+import { ActiveUserData } from '../auth/interface/active-users.interface';
+import { CreatePostProvider } from './providers/create-post.provider';
 
 @Injectable()
 export class PostsService {
@@ -31,6 +33,7 @@ export class PostsService {
          * Injecting metaOptions                            /
          * Injecting userRepository                         /
          * Injecting paginationProvider                     /
+         * Injecting CreatePostProvider                     /
          ------------------------------------------------- */
         private readonly usersService: UsersService,
         @InjectRepository(MetaOptions)
@@ -41,6 +44,7 @@ export class PostsService {
         private readonly userRepository: Repository<User>,
         private readonly tagsService: TagsService,
         private readonly paginationProvider: PaginationProvider,
+        private readonly createPostProvider: CreatePostProvider,
     ) {}
 
     /** --------------------------------------------------------------- /
@@ -61,25 +65,9 @@ export class PostsService {
 
     public async createNewPost(
         createNewPostDto: CreateNewPostDto,
-    ): Promise<Post> {
-        const author = await this.usersService.findOneById(
-            createNewPostDto.authorId,
-        );
-        if (!author) throw new NotFoundException();
-
-        let tags: Tags[] = [];
-        if (createNewPostDto.tags) {
-            tags = await this.tagsService.findMultipleTags(
-                createNewPostDto.tags,
-            );
-        }
-
-        const post = this.postRepository.create({
-            ...createNewPostDto,
-            tags,
-            author,
-        });
-        return this.postRepository.save(post);
+        user: ActiveUserData,
+    ) {
+        return this.createPostProvider.createNewPost(createNewPostDto, user);
     }
 
     public async deletePosts(postId: number) {

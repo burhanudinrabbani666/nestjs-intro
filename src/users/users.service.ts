@@ -14,10 +14,10 @@ import { AuthService } from '../auth/auth.service';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './users.entity';
 import { CreateUserDto } from './dto/create-users.dto';
-import { UsersCreateManyProvider } from './provider/users-create-many.provider';
 import { CreateManyUsersDto } from './dto/create-many-users.dto';
 import { CreateUserProviders } from './providers/create-user.providers';
 import { FindOneUserByEmailProviders } from './providers/find-one-user-by-email.providers';
+import { UsersCreateManyProvider } from './providers/users-create-many.provider';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
@@ -85,8 +85,7 @@ export class UsersService {
                 );
 
             return user;
-        } catch (error) {
-            console.error(error);
+        } catch {
             throw new RequestTimeoutException(
                 'Unable to proccess at the moment please try later',
                 { description: 'Error connecting to the database' },

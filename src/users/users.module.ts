@@ -8,9 +8,9 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User } from './users.entity';
 import { AuthModule } from '../auth/auth.module';
-import { UsersCreateManyProvider } from './provider/users-create-many.provider';
 import { CreateUserProviders } from './providers/create-user.providers';
 import { FindOneUserByEmailProviders } from './providers/find-one-user-by-email.providers';
+import { UsersCreateManyProvider } from './providers/users-create-many.provider';
 
 @Module({
     controllers: [UsersController],

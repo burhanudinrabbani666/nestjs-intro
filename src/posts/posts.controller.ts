@@ -45,8 +45,7 @@ export class PostsController {
         @Body() createNewPostDto: CreateNewPostDto,
         @ActiveUser() user: ActiveUserData,
     ) {
-        console.log(user);
-        console.log(createNewPostDto);
+        return this.postService.createNewPost(createNewPostDto, user);
     }
 
     @Delete()

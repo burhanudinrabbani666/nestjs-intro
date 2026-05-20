@@ -81,7 +81,7 @@ export class Posts {
     metaOptions?: MetaOptions;
 
     @ManyToOne(() => User, (user) => user.post, { eager: true })
-    author!: User;
+    author!: Partial<User>;
 
     @ManyToMany(() => Tags, (tags) => tags.post, { eager: true })
     @JoinTable()

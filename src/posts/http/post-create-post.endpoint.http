@@ -1,21 +1,18 @@
 POST http://localhost:3000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoibmljb0BuaWNvLmlvIiwiaWF0IjoxNzc5MjcxMDQyLCJleHAiOjE3NzkyNzQ2NDIsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.PkPBSduQXIMCiiO-wNJ3i7DpEIZ2xmfqtc6WLNVJYnM
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoibmljb0BuaWNvLmlvIiwiaWF0IjoxNzc5Mjc5OTk0LCJleHAiOjE3NzkyODM1OTQsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.QmUh5FD_U2hlc8CirxkHAvTlm04rZY8yzhgbnxdGZ00
 
 {
-    "title": "Angular Is created By Google",
+    "title": "Vue",
     "postType": "POST",
-    "slug": "angular-js18",
+    "slug": "vue-js",
     "status": "DRAFT",
-    "content": "tets Content",
+    "content": "Simple API with NodeJS",
     "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\":\"Person\"\r\n}",
     "featuredImageUrl": "www.sample.com",
     "publishOn": "2026-05-18T11:36:50.512Z",
-    "tags": ["NestJS", "TypeScript"],
     "metaOptions": {
         "metaValue" : "{\"sidebarEnable\" : true,\"footerActive\" : true}"
     },
-    "authorId": 1,
-    "tags": [1]
+    "tags": [1, 9]
 }
