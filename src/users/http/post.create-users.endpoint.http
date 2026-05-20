@@ -1,19 +1,20 @@
 ### Creating New Users
 POST http://localhost:3000/users/create-many
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoibmljb0BuaWNvLmlvIiwiaWF0IjoxNzc5MjM2NjAyLCJleHAiOjE3NzkyNDAyMDIsImF1ZCI6ImxvY2FsaG9zdDozMDAwIiwiaXNzIjoibG9jYWxob3N0OjMwMDAifQ.o8EfK4K54GeWGuCPRt2OEsZeuiNTNfg5Nittb1P_TQ8
 
 {
     "users": [
         {
           "firstName": "Burhanudin",
           "lastName": "Rabbani",
-          "email": "ganteng@ganteng.io",
+          "email": "ganteng@bani.io",
           "password": "banibani1234*"
         },
         {
           "firstName": "Risaldi",
           "lastName": "Sedeki",
-          "email": "risl@risal.io",
+          "email": "risl@icang.io",
           "password": "banibani1234*"
         }
     ]

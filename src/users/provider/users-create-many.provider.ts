@@ -1,5 +1,6 @@
 import {
     ConflictException,
+    forwardRef,
     Inject,
     Injectable,
     InternalServerErrorException,
@@ -8,6 +9,7 @@ import { User } from '../users.entity';
 import { DataSource, In, Repository } from 'typeorm';
 import { CreateManyUsersDto } from '../dto/create-many-users.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HasingProviders } from '../../auth/providers/hasing.providers';
 
 @Injectable()
 export class UsersCreateManyProvider {
@@ -16,6 +18,8 @@ export class UsersCreateManyProvider {
         private readonly dataSource: DataSource,
         @InjectRepository(User)
         private readonly usersRepository: Repository<User>,
+        @Inject(forwardRef(() => HasingProviders))
+        private readonly hasingProviders: HasingProviders,
     ) {}
 
     /** ------------------------------------------------------  /
@@ -45,6 +49,10 @@ export class UsersCreateManyProvider {
             const users = createManyUsersDto.users;
             for (const user of users) {
                 const newUser = queryRunner.manager.create(User, user);
+                newUser.password = await this.hasingProviders.hashPassword(
+                    newUser.password,
+                );
+
                 const result = await queryRunner.manager.save(newUser);
                 newUsers.push(result);
             }
