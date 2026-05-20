@@ -15,12 +15,12 @@ import { RequestWithUserField } from '../../../common/custom-request/request-wit
 export class AccessTokenGuard implements CanActivate {
     constructor(
         /**
-         *
+         * Inject JwtSevice
          */
         private readonly jwtService: JwtService,
 
         /**
-         * Injectin jwt config
+         * Inject jwt config
          */
         @Inject(jwtConfig.KEY)
         private readonly jwtConfiguraion: ConfigType<typeof jwtConfig>,
