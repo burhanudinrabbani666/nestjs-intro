@@ -11,7 +11,6 @@ import { TagsService } from '../../tags/tags.service';
 import { CreateNewPostDto } from '../dto/create-post.dto';
 import { ActiveUserData } from '../../auth/interface/active-users.interface';
 import { Tags } from '../../tags/tags.entity';
-import { Post } from '../interface/post.interface';
 
 @Injectable()
 export class CreatePostProvider {
