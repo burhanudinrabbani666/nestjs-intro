@@ -27,30 +27,22 @@ export class CreateUserProviders {
      * 408: Failed Connect to database, timeout!                    /
         ---------------------------------------------------------- */
     public async createUser(createUserDto: CreateUserDto): Promise<User> {
-        try {
-            let existingUser: User | null = null;
+        let existingUser: User | null = null;
 
-            existingUser = await this.usersRepository.findOne({
-                where: { email: createUserDto.email },
-            });
+        existingUser = await this.usersRepository.findOne({
+            where: { email: createUserDto.email },
+        });
 
-            if (existingUser) throw new ConflictException('Email Already Used');
+        if (existingUser) throw new ConflictException('Email Already Used');
 
-            let newUser = this.usersRepository.create({
-                ...createUserDto,
-                password: await this.hasingProviders.hashPassword(
-                    createUserDto.password,
-                ),
-            });
-            newUser = await this.usersRepository.save(newUser);
+        let newUser = this.usersRepository.create({
+            ...createUserDto,
+            password: await this.hasingProviders.hashPassword(
+                createUserDto.password,
+            ),
+        });
+        newUser = await this.usersRepository.save(newUser);
 
-            return newUser;
-        } catch (error) {
-            console.log(error);
-            throw new RequestTimeoutException(
-                'Unable to proccess at the moment please try later',
-                { description: 'Error connecting to the database' },
-            );
-        }
+        return newUser;
     }
 }
