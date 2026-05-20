@@ -4,13 +4,13 @@ import {
     Injectable,
     UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { type ConfigType } from '@nestjs/config';
+
 import { SingInDto } from '../dtos/signin.dto';
 import { UsersService } from '../../users/users.service';
 import { HasingProviders } from './hasing.providers';
-import { JwtService } from '@nestjs/jwt';
-import { type ConfigType } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
-import { ActiveUserData } from '../interface/active-users.interface';
 import { GenerateTokenProvider } from './generate-token.provider';
 
 @Injectable()

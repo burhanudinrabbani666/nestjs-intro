@@ -10,7 +10,6 @@ import { type ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { GenerateTokenProvider } from './generate-token.provider';
 import { UsersService } from '../../users/users.service';
-import { JwtPayloadInterface } from '../interface/jwt-payload.interface';
 import { ActiveUserData } from '../interface/active-users.interface';
 
 @Injectable()
