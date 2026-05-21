@@ -2,7 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
+import { config } from 'aws-sdk';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -20,7 +21,7 @@ async function bootstrap() {
     /** --------------------------------------- /
      * Swagger Documentation Config             /
      ----------------------------------------- */
-    const config = new DocumentBuilder()
+    const swaggerConfig = new DocumentBuilder()
         .setTitle('NestJS MasterClass - Blog app API')
         .setDescription('Use the base API URL as http://localhost:3000')
         .setTermsOfService('http://localhost:3000/terms-and-service')
@@ -28,8 +29,19 @@ async function bootstrap() {
         .addServer('http://localhost:3000')
         .setVersion('1.0')
         .build();
-    const document = SwaggerModule.createDocument(app, config);
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup('api', app, document);
+
+    // Setup AWS s3 Bucket
+    const configService = app.get(ConfigService);
+    config.update({
+        credentials: {
+            accessKeyId: configService.get('appConfig.awsAccessKeyId') ?? '',
+            secretAccessKey:
+                configService.get('appConfig.awsSecretAccessKey') ?? '',
+        },
+        region: configService.get('appConfig.awsRegion') ?? '',
+    });
 
     app.enableCors();
     await app.listen(process.env.PORT ?? 3000);
