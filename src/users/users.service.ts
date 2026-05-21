@@ -1,16 +1,11 @@
 import {
-    forwardRef,
     Inject,
     Injectable,
     NotFoundException,
     RequestTimeoutException,
 } from '@nestjs/common';
-import { type ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import profileConfig from './config/profile.config';
-
-import { AuthService } from '../auth/auth.service';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './users.entity';
 import { CreateUserDto } from './dto/create-users.dto';
@@ -62,7 +57,7 @@ export class UsersService {
      * 500: Internal Server Error                                   /
      * 408: Failed Connect to database, timeout!                    /
         ---------------------------------------------------------- */
-    public findAll(limit?: number, page?: number) {
+    public findAll() {
         return this.usersRepository.find();
     }
 

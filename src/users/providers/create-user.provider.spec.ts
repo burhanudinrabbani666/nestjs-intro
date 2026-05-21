@@ -2,12 +2,25 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserProviders } from './create-user.providers';
 import { MailService } from '../../mail/mail.service';
 import { HasingProviders } from '../../auth/providers/hasing.providers';
-import { DataSource } from 'typeorm';
+import { DataSource, ObjectLiteral, Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../users.entity';
 
+type MockRepository<T extends ObjectLiteral = any> = Partial<
+    Record<keyof Repository<T>, jest.Mock>
+>;
+
+const createMockRepository = <
+    T extends ObjectLiteral = any,
+>(): MockRepository<T> => ({
+    findOne: jest.fn(),
+    create: jest.fn(),
+    save: jest.fn(),
+});
+
 describe('CreateUserProvider', () => {
     let providers: CreateUserProviders;
+    let userRepository: MockRepository;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -16,11 +29,15 @@ describe('CreateUserProvider', () => {
                 { provide: MailService, useValue: {} },
                 { provide: HasingProviders, useValue: {} },
                 { provide: DataSource, useValue: {} },
-                { provide: getRepositoryToken(User), useValue: {} },
+                {
+                    provide: getRepositoryToken(User),
+                    useValue: createMockRepository,
+                },
             ],
         }).compile();
 
         providers = module.get<CreateUserProviders>(CreateUserProviders);
+        userRepository = module.get(getRepositoryToken(User));
     });
 
     it('Should be defined', () => {

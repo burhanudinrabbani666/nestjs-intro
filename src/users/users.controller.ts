@@ -2,13 +2,10 @@ import {
     Body,
     ClassSerializerInterceptor,
     Controller,
-    DefaultValuePipe,
     Get,
     Param,
-    ParseIntPipe,
     Patch,
     Post,
-    Query,
     UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-users.dto';
@@ -57,11 +54,8 @@ export class UsersController {
         description: 'The Position of the apge that you want in API',
         example: 1,
     })
-    public getUsers(
-        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    ) {
-        return this.usersService.findAll(limit, page);
+    public getUsers() {
+        return this.usersService.findAll();
     }
 
     @Get(':id')
