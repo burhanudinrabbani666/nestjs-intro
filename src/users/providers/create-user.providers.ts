@@ -3,12 +3,14 @@ import {
     forwardRef,
     Inject,
     Injectable,
+    RequestTimeoutException,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-users.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users.entity';
 import { Repository } from 'typeorm';
 import { HasingProviders } from '../../auth/providers/hasing.providers';
+import { MailService } from '../../mail/mail.service';
 
 @Injectable()
 export class CreateUserProviders {
@@ -17,6 +19,10 @@ export class CreateUserProviders {
         private readonly usersRepository: Repository<User>,
         @Inject(forwardRef(() => HasingProviders))
         private readonly hasingProviders: HasingProviders,
+        /**
+         * Inject Mail Service
+         */
+        private readonly mailService: MailService,
     ) {}
 
     /** ----------------------------------------------------------- /
@@ -41,6 +47,13 @@ export class CreateUserProviders {
             ),
         });
         newUser = await this.usersRepository.save(newUser);
+
+        try {
+            await this.mailService.sendUserWelcome(newUser);
+        } catch (error) {
+            console.error('Mail Error:', error);
+            throw new RequestTimeoutException(error);
+        }
 
         return newUser;
     }

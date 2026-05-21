@@ -23,5 +23,5 @@
         "noFallthroughCasesInSwitch": false,
         "types": ["jest", "node", "express", "multer"]
     },
-    "include": ["src/**/*.ts", "src/**/*.js"]
+    "include": ["src/**/*.ts", "src/**/*.js", "test/*"]
 }

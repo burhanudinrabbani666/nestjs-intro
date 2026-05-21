@@ -1,7 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { User } from '../users/users.entity';
-import { name } from 'ejs';
 
 @Injectable()
 export class MailService {
@@ -12,7 +11,7 @@ export class MailService {
             to: user.email,
             from: `Oneboarding Team <support@nestjs-blog.com>`,
             subject: 'Welcome to NestJS Blog',
-            template: './welcom e',
+            template: './welcome.ejs',
             context: {
                 name: user.firstName,
                 email: user.email,

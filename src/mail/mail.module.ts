@@ -16,7 +16,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/adapters/ejs.adapter';
                     secure: false,
                     port: 2525,
                     auth: {
-                        user: config.get<string>('appConfig.smtpuserName'),
+                        user: config.get<string>('appConfig.smtpUsername'),
                         pass: config.get<string>('appConfig.smtpPassword'),
                     },
                 },
@@ -25,7 +25,9 @@ import { EjsAdapter } from '@nestjs-modules/mailer/adapters/ejs.adapter';
                 },
                 template: {
                     dir: join(__dirname, 'templates'),
-                    adapter: new EjsAdapter(),
+                    adapter: new EjsAdapter({
+                        inlineCssEnabled: true,
+                    }),
                     options: {
                         strict: false,
                     },
