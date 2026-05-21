@@ -84,22 +84,23 @@ export class UsersService {
      * 408: Failed Connect to database, timeout!                    /
         ---------------------------------------------------------- */
     public async findOneById(id: number): Promise<User> {
+        let user: User | null;
         try {
-            const user = await this.usersRepository.findOne({ where: { id } });
-
-            if (!user)
-                throw new NotFoundException(
-                    'User Not Found. Please Check Your User id',
-                    { description: 'User with Id not found' },
-                );
-
-            return user;
+            user = await this.usersRepository.findOne({ where: { id } });
         } catch {
             throw new RequestTimeoutException(
                 'Unable to proccess at the moment please try later',
                 { description: 'Error connecting to the database' },
             );
         }
+
+        if (!user)
+            throw new NotFoundException(
+                'User Not Found. Please Check Your User id',
+                { description: 'User with Id not found' },
+            );
+
+        return user;
     }
 
     public async createManyUsers(createManyUserDto: CreateManyUsersDto) {

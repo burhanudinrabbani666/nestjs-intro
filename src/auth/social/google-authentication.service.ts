@@ -38,31 +38,39 @@ export class GoogleAuthenticationService implements OnModuleInit {
     }
 
     public async authenticate(googleTokenDto: GoogleTokenDto) {
-        const loginTicket = await this.oauthClient.verifyIdToken({
-            idToken: googleTokenDto.token,
-        });
+        try {
+            const loginTicket = await this.oauthClient.verifyIdToken({
+                idToken: googleTokenDto.token,
+            });
 
-        const payload = loginTicket.getPayload();
-        if (!payload) throw new UnauthorizedException();
-        const {
-            email,
-            sub: googleId,
-            given_name: firstName,
-            family_name: lastNamae,
-        } = payload;
+            const payload = loginTicket.getPayload();
+            if (!payload) throw new UnauthorizedException();
+            const {
+                email,
+                sub: googleId,
+                given_name: firstName,
+                family_name: lastName,
+            } = payload;
 
-        const user = await this.usersService.findOneByGoogleId(googleId);
+            const user = await this.usersService.findOneByGoogleId(googleId);
 
-        // If googleId exis generate token
-        if (user) {
-            return this.generateTokenProvider.generateTokens(user);
+            // If googleId exis generate token
+            if (user) {
+                return this.generateTokenProvider.generateTokens(user);
+            }
+
+            // If not. Create a new User and the generate token
+            const newUser = await this.usersService.createGoogleUser({
+                email,
+                firstName,
+                lastName,
+                googleId,
+            });
+            console.log(newUser);
+
+            return this.generateTokenProvider.generateTokens(newUser);
+        } catch (error) {
+            throw new UnauthorizedException(error);
         }
-
-        // If not. Create a new User and the generate token
-        // if(!user){
-        //     await this.
-        // }
-
-        // throw Unauthorized
     }
 }
