@@ -44,7 +44,7 @@ export class UploadToAwsProvider {
 
         // Extract the extension
         // Generate time stamp
-        const timestamp = new Date().toString().trim();
+        const timestamp = Date.now().toString().trim();
 
         // return
         return `${name}-${timestamp}-${v4()}${extension}`;

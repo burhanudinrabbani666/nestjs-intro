@@ -33,7 +33,7 @@ export class UploadsService {
     public async uploadFile(file: Express.Multer.File) {
         try {
             if (
-                ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'].includes(
+                !['image/gif', 'image/jpeg', 'image/jpg', 'image/png'].includes(
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
                     file.mimetype,
                 )
@@ -42,6 +42,7 @@ export class UploadsService {
             }
             // Upload to the file to AWS S3
             const name = await this.uploadToAwsProvider.fileUpload(file);
+
             // Generate to a new entry in database
             const uploadFile: UploadFile = {
                 name,
