@@ -32,9 +32,7 @@ export class CreateUserProviders {
      * 408: Failed Connect to database, timeout!                    /
         ---------------------------------------------------------- */
     public async createUser(createUserDto: CreateUserDto): Promise<User> {
-        let existingUser: User | null = null;
-
-        existingUser = await this.usersRepository.findOne({
+        const existingUser = await this.usersRepository.findOne({
             where: { email: createUserDto.email },
         });
 
