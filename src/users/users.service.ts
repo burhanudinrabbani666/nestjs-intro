@@ -19,6 +19,8 @@ import { CreateUserProviders } from './providers/create-user.providers';
 import { FindOneUserByEmailProviders } from './providers/find-one-user-by-email.providers';
 import { UsersCreateManyProvider } from './providers/users-create-many.provider';
 import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
+import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
+import { GoogleUser } from './interfaces/google-user.interface';
 
 /** Class to Connect to users table and perform business logic */
 @Injectable()
@@ -56,6 +58,9 @@ export class UsersService {
 
         //--------------------------------------------------------------------
         private readonly findOneByGoogleIdProvider: FindOneByGoogleIdProvider,
+
+        //--------------------------------------------------------------------
+        private readonly createGoogleUserProvider: CreateGoogleUserProvider,
     ) {}
 
     /** ----------------------------------------------------------- /
@@ -107,5 +112,9 @@ export class UsersService {
 
     public async findOneByGoogleId(googleId: string) {
         return this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
+    }
+
+    public async createGoogleUser(googleUser: GoogleUser) {
+        return await this.createGoogleUserProvider.createGoogleUser(googleUser);
     }
 }
