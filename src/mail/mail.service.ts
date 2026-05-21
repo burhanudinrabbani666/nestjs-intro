@@ -1,4 +1,23 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+import { User } from '../users/users.entity';
+import { name } from 'ejs';
 
 @Injectable()
-export class MailService {}
+export class MailService {
+    constructor(private readonly mailerService: MailerService) {}
+
+    public async sendUserWelcome(user: User): Promise<void> {
+        await this.mailerService.sendMail({
+            to: user.email,
+            from: `Oneboarding Team <support@nestjs-blog.com>`,
+            subject: 'Welcome to NestJS Blog',
+            template: './welcom e',
+            context: {
+                name: user.firstName,
+                email: user.email,
+                loginUrl: 'http://localhost:3000',
+            },
+        });
+    }
+}
