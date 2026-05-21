@@ -21,13 +21,29 @@ const createMockRepository = <
 describe('CreateUserProvider', () => {
     let providers: CreateUserProviders;
     let userRepository: MockRepository;
+    const user: Partial<User> = {
+        firstName: 'Bani',
+        lastName: 'Goat',
+        email: 'Bani@bann.io',
+        password: 'password',
+    };
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 CreateUserProviders,
-                { provide: MailService, useValue: {} },
-                { provide: HasingProviders, useValue: {} },
+                {
+                    provide: MailService,
+                    useValue: {
+                        sendUserWelcome: jest.fn(() => Promise.resolve()),
+                    },
+                },
+                {
+                    provide: HasingProviders,
+                    useValue: {
+                        hashPassword: jest.fn(() => user.password),
+                    },
+                },
                 { provide: DataSource, useValue: {} },
                 {
                     provide: getRepositoryToken(User),
