@@ -3,8 +3,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../../src/app.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { appCreate } from '../../src/app.create';
+import { App } from 'supertest/types';
 
-export async function bootstarpNestApplication(): Promise<INestApplication> {
+export async function bootstarpNestApplication(): Promise<
+    INestApplication<App>
+> {
     const moduleFixture: TestingModule = await Test.createTestingModule({
         imports: [AppModule, ConfigModule],
         providers: [ConfigService],

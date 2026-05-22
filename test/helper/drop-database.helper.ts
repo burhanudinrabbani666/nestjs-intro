@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 export async function dropDatabase(
     configService: ConfigService,
 ): Promise<void> {
-    const AppDataSource = new DataSource({
+    const appDataSource = await new DataSource({
         type: 'postgres',
         host: configService.get('database.host'),
         port: +configService.get('database.port'),
@@ -12,8 +12,8 @@ export async function dropDatabase(
         username: configService.get('database.username'),
         password: configService.get('database.password'),
         synchronize: configService.get('database.synchronize'),
-    });
+    }).initialize();
 
-    await AppDataSource.dropDatabase();
-    await AppDataSource.destroy();
+    await appDataSource.dropDatabase();
+    await appDataSource.destroy();
 }
