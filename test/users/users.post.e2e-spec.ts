@@ -4,7 +4,6 @@ import { bootstarpNestApplication } from '../helper/bootstrap-nest=application.h
 import { ConfigService } from '@nestjs/config';
 import { App } from 'supertest/types';
 import request from 'supertest';
-import { completeUser } from './users.post.e2e-spec.sample-data';
 import {
     completeUser,
     missingEmail,

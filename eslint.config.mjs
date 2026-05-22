@@ -20,7 +20,11 @@ export default tseslint.config(
             sourceType: 'commonjs',
             parserOptions: {
                 projectService: {
-                    allowDefaultProject: ['*.js', 'src/config/*.js'],
+                    allowDefaultProject: [
+                        '*.js',
+                        'src/config/*.js',
+                        './typeorm-cli.config.ts',
+                    ],
                 },
                 tsconfigRootDir: import.meta.dirname,
             },

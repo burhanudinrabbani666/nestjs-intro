@@ -23,5 +23,5 @@
         "noFallthroughCasesInSwitch": false,
         "types": ["jest", "node", "express", "multer"]
     },
-    "include": ["src/**/*.ts", "src/**/*.js", "test/*", "test/**/*.ts"]
+    "include": ["src/**/*.ts", "src/**/*.js", "./typeorm-cli.config.ts"]
 }
