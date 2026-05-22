@@ -1,24 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 
 import appConfig from './config/configuration';
 import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
+import jwtConfig from './auth/config/jwt.config';
 
 import { AppController } from './app/app.controller';
 import { AppService } from './app/app.service';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
-import { AuthModule } from './auth/auth.module';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
-import { PaginationModule } from './common/pagination/pagination.module';
-import jwtConfig from './auth/config/jwt.config';
-import { JwtModule } from '@nestjs/jwt';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
 import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
 import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
+import { PaginationModule } from './common/pagination/pagination.module';
 import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
 import { UploadsModule } from './uploads/uploads.module';
 import { MailModule } from './mail/mail.module';
