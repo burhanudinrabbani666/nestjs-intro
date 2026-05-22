@@ -4,6 +4,12 @@ import { bootstarpNestApplication } from '../helper/bootstrap-nest=application.h
 import { ConfigService } from '@nestjs/config';
 import { App } from 'supertest/types';
 import request from 'supertest';
+import {
+    completeUser,
+    missingEmail,
+    missingFirstName,
+    missingPassword,
+} from './users.post.e2e-spec.sample-data';
 
 describe('[userController] @Post Endpoints (e2e)', () => {
     let app: INestApplication<App>;
@@ -22,17 +28,30 @@ describe('[userController] @Post Endpoints (e2e)', () => {
     });
 
     it('/users - Endpoint is public', () => {
+        return request(httpServer).post('/users').send({}).expect(400);
+    });
+
+    it('/users - firstName is mandatory', () => {
         return request(httpServer)
             .post('/users')
-            .send({})
-            .expect(400)
-            .then((data) => {
-                console.log(data.body);
-            });
+            .send(missingFirstName)
+            .expect(400);
     });
-    it.todo('/users - firstName is mandatory');
-    it.todo('/users - lastName is mandatory');
-    it.todo('/users - email is mandatory');
+
+    it('/users - email is mandatory', () => {
+        return request(httpServer)
+            .post('/users')
+            .send(missingEmail)
+            .expect(400);
+    });
+
+    it('/users - password is mandatory', () => {
+        return request(httpServer)
+            .post('/users')
+            .send(missingPassword)
+            .expect(400);
+    });
+
     it.todo('/users - valid request succesfully create user');
     it.todo('/users - password is not returned in response');
     it.todo('/users - googleId is not returned in response');

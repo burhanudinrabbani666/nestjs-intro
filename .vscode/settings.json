@@ -9,6 +9,16 @@
             "name": "nestjs_intro",
             "database": "nestjs_blog",
             "username": "rabbani"
+        },
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "psql_test",
+            "database": "nestjs_blog_test",
+            "username": "rabbani"
         }
     ]
 }
