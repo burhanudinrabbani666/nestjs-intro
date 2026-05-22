@@ -4,6 +4,7 @@ import { bootstarpNestApplication } from '../helper/bootstrap-nest=application.h
 import { ConfigService } from '@nestjs/config';
 import { App } from 'supertest/types';
 import request from 'supertest';
+import { completeUser } from './users.post.e2e-spec.sample-data';
 import {
     completeUser,
     missingEmail,
@@ -52,7 +53,41 @@ describe('[userController] @Post Endpoints (e2e)', () => {
             .expect(400);
     });
 
-    it.todo('/users - valid request succesfully create user');
-    it.todo('/users - password is not returned in response');
-    it.todo('/users - googleId is not returned in response');
+    it('/users - valid request succesfully create user', () => {
+        return request(httpServer)
+            .post('/users')
+            .send(completeUser)
+            .expect(201)
+            .then(({ body }) => {
+                expect(body).toBeDefined();
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                expect(body.data.firstName).toBeDefined();
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                expect(body.data.firstName).toBe(completeUser.firstName);
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                expect(body.data.lastName).toBe(completeUser.lastName);
+            });
+    });
+
+    it('/users - password is not returned in response', () => {
+        return request(httpServer)
+            .post('/users')
+            .send(completeUser)
+            .expect(201)
+            .then(({ body }) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                expect(body.data.password).toBeUndefined();
+            });
+    });
+
+    it('/users - googleId is not returned in response', () => {
+        return request(httpServer)
+            .post('/users')
+            .send(completeUser)
+            .expect(201)
+            .then(({ body }) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                expect(body.data.googleId).toBeUndefined();
+            });
+    });
 });
